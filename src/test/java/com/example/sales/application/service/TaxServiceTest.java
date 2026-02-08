@@ -61,7 +61,7 @@ public class TaxServiceTest {
         final BigDecimal taxAmountActual = TaxService.getTaxAmount(importedSaleProductGiven);
 
         // Then
-        assertThat(taxAmountActual).isEqualByComparingTo("0.80");
+        assertThat(taxAmountActual).isEqualByComparingTo("2.35");
     }
 
     @Test
@@ -94,6 +94,23 @@ public class TaxServiceTest {
 
         // Then
         assertThat(productActual).usingRecursiveComparison().isEqualTo(notBasicSaleAndNotImportedProductGiven);
+    }
+
+    @Test
+    void productWithQuantityAndTax_caseSucess() {
+        // Given
+        final Product basicSaleProductGiven =  new ProductTestBuilder()
+                .withQuantity(7)
+                .build();
+
+        // When
+        final Product productActual = TaxService.applyTax(basicSaleProductGiven);
+
+        // Then
+        assertThat(productActual).usingRecursiveComparison()
+                .ignoringFields("price")
+                .isEqualTo(basicSaleProductGiven);
+        assertThat(productActual.price()).isEqualTo(new BigDecimal("77.00"));
     }
 
     @Test

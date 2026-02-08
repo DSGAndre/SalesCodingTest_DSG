@@ -38,6 +38,22 @@ class ImportTaxRuleTest {
     }
 
     @Test
+    void taxCalculated_caseProductTaxableWithMultipleQuantity() {
+        // Given
+        final Product productImportedGiven = new ProductTestBuilder()
+                .imported()
+                .withQuantity(5)
+                .build();
+
+        // When
+        final Optional<BigDecimal> productAmountTaxOptional = IMPORT_SALE_TAX_RULE.getProductAmountTax(productImportedGiven);
+
+        // Then
+        assertThat(productAmountTaxOptional).isNotEmpty();
+        assertThat(productAmountTaxOptional.get()).isEqualByComparingTo("2.50");
+    }
+
+    @Test
     void taxRoundedCalculated_caseProductTaxableRoundable() {
         // Given
         final Product productImportedGiven = ProductTestBuilder.aFoodProductImported();
@@ -47,6 +63,6 @@ class ImportTaxRuleTest {
 
         // Then
         assertThat(productAmountTaxOptional).isNotEmpty();
-        assertThat(productAmountTaxOptional.get()).isEqualByComparingTo("0.80");
+        assertThat(productAmountTaxOptional.get()).isEqualByComparingTo("2.35");
     }
 }

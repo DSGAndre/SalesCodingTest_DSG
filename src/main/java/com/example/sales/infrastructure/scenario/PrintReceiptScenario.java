@@ -24,7 +24,7 @@ public class PrintReceiptScenario {
     private static void printReceipt(final String fileName) {
         final List<ProductDto> productDtoList = InputProductReaderService.readProductInput(fileName);
         final List<Product> productList = ProductDtoToProductMapper.convertList(productDtoList);
-        final Receipt receipt = ReceiptService.contructReceipt(productList);
+        final Receipt receipt = ReceiptService.constructReceipt(productList);
 
         ReceiptService.printReceipt(receipt);
     }

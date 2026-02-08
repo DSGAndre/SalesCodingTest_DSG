@@ -43,14 +43,14 @@ public class ReceiptServiceTest {
 
     @Test
     void productListInvalidException_caseProductListNull() {
-        assertThatThrownBy(() -> ReceiptService.contructReceipt(null))
+        assertThatThrownBy(() -> ReceiptService.constructReceipt(null))
                 .isInstanceOf(ReceiptException.class)
                 .hasMessage(ReceiptException.productListInvalid(null).getMessage());
     }
 
     @Test
     void productListInvalidException_caseProductListEmpty() {
-        assertThatThrownBy(() -> ReceiptService.contructReceipt(Collections.emptyList()))
+        assertThatThrownBy(() -> ReceiptService.constructReceipt(Collections.emptyList()))
                 .isInstanceOf(ReceiptException.class)
                 .hasMessage(ReceiptException.productListInvalid(Collections.emptyList()).getMessage());
     }
@@ -62,7 +62,7 @@ public class ReceiptServiceTest {
         final List<Product> singletonProductListProvided = Collections.singletonList(productWithoutTaxProvided);
 
         // When
-        final Receipt receiptActual = ReceiptService.contructReceipt(singletonProductListProvided);
+        final Receipt receiptActual = ReceiptService.constructReceipt(singletonProductListProvided);
 
         // Then
         final Receipt receiptExpected = new Receipt(singletonProductListProvided, productWithoutTaxProvided.price(), BigDecimal.ZERO);
@@ -77,7 +77,7 @@ public class ReceiptServiceTest {
         final List<Product> singletonProductListProvided = Collections.singletonList(productWithBasicTaxProvided);
 
         // When
-        final Receipt receiptActual = ReceiptService.contructReceipt(singletonProductListProvided);
+        final Receipt receiptActual = ReceiptService.constructReceipt(singletonProductListProvided);
 
         // Then
         assertThat(receiptActual.productList()).hasSize(1);
@@ -96,7 +96,7 @@ public class ReceiptServiceTest {
         final List<Product> singletonProductListProvided = Collections.singletonList(productWithBasicAndImportedTaxProvided);
 
         // When
-        final Receipt receiptActual = ReceiptService.contructReceipt(singletonProductListProvided);
+        final Receipt receiptActual = ReceiptService.constructReceipt(singletonProductListProvided);
 
         // Then
         assertThat(receiptActual.productList()).hasSize(1);
@@ -117,7 +117,7 @@ public class ReceiptServiceTest {
         final List<Product> productListProvided = Arrays.asList(productWithoutTaxProvided, productWithBasicTaxProvided, productWithBasicAndImportedTaxProvided);
 
         // When
-        final Receipt receiptActual = ReceiptService.contructReceipt(productListProvided);
+        final Receipt receiptActual = ReceiptService.constructReceipt(productListProvided);
 
         // Then
         assertThat(receiptActual.productList()).hasSize(3);

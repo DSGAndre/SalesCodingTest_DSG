@@ -40,7 +40,8 @@ public class TaxService {
             throw ProductException.productInvalid();
         }
         final BigDecimal taxAmount = getTaxAmount(product);
-        final BigDecimal priceTaxed = product.price().add(taxAmount);
+        final BigDecimal priceWithQuantity = product.price().multiply(BigDecimal.valueOf(product.quantity()));
+        final BigDecimal priceTaxed = priceWithQuantity.add(taxAmount);
 
         return new Product(product.name(), product.quantity(), product.category(), priceTaxed, product.isImported());
     }

@@ -36,6 +36,21 @@ class BasicSalesTaxRuleTest {
     }
 
     @Test
+    void taxCalculated_caseProductTaxableWithMultipleQuantity() {
+        // Given
+        final Product productGiven = new ProductTestBuilder()
+                .withQuantity(3)
+                .build();
+
+        // When
+        final Optional<BigDecimal> productAmountTaxOptional = BASIC_SALE_TAX_RULE.getProductAmountTax(productGiven);
+
+        // Then
+        assertThat(productAmountTaxOptional).isNotEmpty();
+        assertThat(productAmountTaxOptional.get()).isEqualByComparingTo("3.00");
+    }
+
+    @Test
     void taxRoundedCalculated_caseProductTaxableRoundable() {
         // Given
         final Product productGiven = ProductTestBuilder.aMouseProduct();

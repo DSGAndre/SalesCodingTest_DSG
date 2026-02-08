@@ -77,6 +77,8 @@ INFRASTRUCTURE
 2. A datastore could store the product with: ID, name, category, price, price with taxes.
 3. Frontend will call the backend with an item ID and no more with product information.
 4. Backend should implement more routes: Create/Update/Delete/Get.
-5. Adding a logger could be efficient if we need to log more than just errors
+5. Use of spring to inject dependance and remove static from some methods
+6. Remplace unitTest by scenario test for an end to end test
+7. Adding a logger could be efficient if we need to log more than just errors
 - Debug: Helps to find problems
 - Warnings: Used when errors are acceptable

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ReceiptService {
 
-    public static Receipt contructReceipt(final List<Product> productList) {
+    public static Receipt constructReceipt(final List<Product> productList) {
         if (productList == null || productList.isEmpty()) {
             throw ReceiptException.productListInvalid(productList);
         }

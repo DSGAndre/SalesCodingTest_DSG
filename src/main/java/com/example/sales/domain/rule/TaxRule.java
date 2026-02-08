@@ -23,7 +23,8 @@ public abstract class TaxRule {
         }
 
         final BigDecimal taxAmount = product.price().multiply(taxRate);
+        final BigDecimal taxAmountWithQuantity = taxAmount.multiply(BigDecimal.valueOf(product.quantity()));
 
-        return RoundingUtils.getRoundedUpToNearestFiveCents(taxAmount);
+        return RoundingUtils.getRoundedUpToNearestFiveCents(taxAmountWithQuantity);
     }
 }

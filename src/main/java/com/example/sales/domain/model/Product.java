@@ -27,4 +27,15 @@ public record Product(String name, int quantity, Category category, BigDecimal p
     public boolean isBasicSaleTaxable() {
         return category == Category.OTHERS;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", category=" + category +
+                ", price=" + price +
+                ", isImported=" + isImported +
+                '}';
+    }
 }

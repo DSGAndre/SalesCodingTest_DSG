@@ -19,7 +19,7 @@ The client calls the application to print a receipt. For that, they provide info
 - Items can be imported, if they are an additional 5% tax will be applied.
 - Taxes are rounded up to 0.05.
 
-## Conception
+## Initial Conception
 ```
 DOMAIN 
 	Model 
@@ -77,3 +77,6 @@ INFRASTRUCTURE
 2. A datastore could store the product with: ID, name, category, price, price with taxes.
 3. Frontend will call the backend with an item ID and no more with product information.
 4. Backend should implement more routes: Create/Update/Delete/Get.
+5. Adding a logger could be efficient if we need to log more than just errors
+- Debug: Helps to find problems
+- Warnings: Used when errors are acceptable

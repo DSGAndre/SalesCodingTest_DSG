@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum Category {
     BOOKS(Collections.singletonList("book")),
-    FOOD(Collections.singletonList("cholate")),
+    FOOD(Collections.singletonList("chocolate")),
     MEDICAL(Collections.singletonList("headache pills")),
     OTHERS(Collections.EMPTY_LIST);
 

@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class TaxServiceTest {
 
     @Test
-    void emptyPriceResult_caseNullProduct() {
+    void productInvalidException_caseNullProduct() {
         assertThatThrownBy(() -> TaxService.getPriceTaxed(null))
                 .isInstanceOf(ProductException.class)
                 .hasMessage(ProductException.productInvalid().getMessage());
     }
 
     @Test
-    void productExceptionPriceInvalid_caseNullPrice() {
+    void productPriceException_caseNullPrice() {
         assertThatThrownBy(() -> new ProductTestBuilder()
                 .withoutPrice()
                 .build())

@@ -18,20 +18,35 @@ public class TaxService {
         if (product == null) {
             throw ProductException.productInvalid();
         }
-        BigDecimal taxedPrice = product.price();
+        BigDecimal taxAmount = BigDecimal.ZERO;
 
         if (product.isBasicSaleTaxable()) {
             final BigDecimal basicTax = BASIC_SALE_TAX_RULE.getProductAmountTax(product)
                     .orElseThrow(() -> TaxException.basicSaleTaxCalculationFailed(product));
-            taxedPrice = taxedPrice.add(basicTax);
+            taxAmount = taxAmount.add(basicTax);
         }
 
         if (product.isImported()) {
             final BigDecimal importTax = IMPORT_SALE_TAX_RULE.getProductAmountTax(product)
                     .orElseThrow(() -> TaxException.importSaleTaxCalculationFailed(product));
-            taxedPrice = taxedPrice.add(importTax);
+            taxAmount = taxAmount.add(importTax);
         }
 
-        return taxedPrice;
+        return taxAmount;
+    }
+
+    public static Product addPriceTaxed(final Product product, final BigDecimal taxAmount) {
+        if (product == null) {
+            throw ProductException.productInvalid();
+        }
+
+        if (taxAmount == null || taxAmount.compareTo(BigDecimal.ZERO) < 0) {
+            // TODO ADA - CREATE A valueObject taxAmount que va return getPriceTaxed
+            throw TaxException.taxAmountInvalid(taxAmount);
+        }
+
+        final BigDecimal priceTaxed = product.price().add(taxAmount);
+
+        return new Product(product.name(), product.quantity(), product.category(), priceTaxed, product.isImported());
     }
 }

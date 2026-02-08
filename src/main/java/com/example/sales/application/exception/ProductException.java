@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class ProductException extends RuntimeException {
     final static String PRODUCT_INVALID = "[ERROR] : Product must not be null.";
-    final static String NAME_INVALID = "[ERROR] : Name must be valid. Provided name: ";
+    final static String NAME_INVALID = "[ERROR] : Name must be filled and not null. Provided name: ";
     final static String QUANTITY_NEGATIVE = "[ERROR] : Quantity must be positive. Provided quantity: ";
     final static String CATEGORY_INVALID = "[ERROR] : Category must not be null.";
     final static String PRICE_INVALID = "[ERROR] : price must be positive and not null. Provided price: ";

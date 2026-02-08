@@ -1,6 +1,7 @@
 package com.example.sales.application.service;
 
 import com.example.sales.application.exception.ProductException;
+import com.example.sales.application.exception.TaxException;
 import com.example.sales.domain.builder.ProductTestBuilder;
 import com.example.sales.domain.model.Product;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class TaxServiceTest {
 
     @Test
-    void emptyResult_caseNullProduct() {
+    void emptyPriceResult_caseNullProduct() {
         assertThatThrownBy(() -> TaxService.getPriceTaxed(null))
                 .isInstanceOf(ProductException.class)
                 .hasMessage(ProductException.productInvalid().getMessage());
@@ -29,7 +30,7 @@ public class TaxServiceTest {
     }
 
     @Test
-    void notTaxToApply_caseNotBasicSaleAndNotImported() {
+    void priceWithNoTaxToApply_caseNotBasicSaleAndNotImported() {
         // Given
         final Product notBasicSaleAndNotImportedProductGiven = ProductTestBuilder.aBookProduct();
 
@@ -37,7 +38,7 @@ public class TaxServiceTest {
         final BigDecimal priceTaxed = TaxService.getPriceTaxed(notBasicSaleAndNotImportedProductGiven);
 
         // Then
-        assertThat(priceTaxed).isEqualByComparingTo(notBasicSaleAndNotImportedProductGiven.price());
+        assertThat(priceTaxed).isEqualByComparingTo(BigDecimal.ZERO);
     }
 
     @Test
@@ -49,7 +50,7 @@ public class TaxServiceTest {
         final BigDecimal priceTaxed = TaxService.getPriceTaxed(basicSaleProductGiven);
 
         // Then
-        assertThat(priceTaxed).isEqualByComparingTo("25.56");
+        assertThat(priceTaxed).isEqualByComparingTo("2.35");
     }
 
     @Test
@@ -61,7 +62,7 @@ public class TaxServiceTest {
         final BigDecimal priceTaxed = TaxService.getPriceTaxed(importedSaleProductGiven);
 
         // Then
-        assertThat(priceTaxed).isEqualByComparingTo("16.25");
+        assertThat(priceTaxed).isEqualByComparingTo("0.80");
     }
 
     @Test
@@ -73,6 +74,59 @@ public class TaxServiceTest {
         final BigDecimal priceTaxed = TaxService.getPriceTaxed(productGiven);
 
         // Then
-        assertThat(priceTaxed).isEqualByComparingTo("35.08");
+        assertThat(priceTaxed).isEqualByComparingTo("4.60");
+    }
+
+    @Test
+    void emptyProductResult_caseNullProduct() {
+        assertThatThrownBy(() -> TaxService.addPriceTaxed(null, BigDecimal.ONE))
+                .isInstanceOf(ProductException.class)
+                .hasMessage(ProductException.productInvalid().getMessage());
+    }
+
+    @Test
+    void emptyProductResult_caseNullTaxAmount() {
+        assertThatThrownBy(() -> TaxService.addPriceTaxed(new ProductTestBuilder().build(), null))
+                .isInstanceOf(TaxException.class)
+                .hasMessage(TaxException.taxAmountInvalid(null).getMessage());
+    }
+
+    @Test
+    void emptyProductResult_caseNegativeTaxAmount() {
+        // Given
+        final BigDecimal negativeTaxAmountGiven = BigDecimal.valueOf(-5);
+
+        // When / Then
+        assertThatThrownBy(() -> TaxService.addPriceTaxed(new ProductTestBuilder().build(), negativeTaxAmountGiven))
+                .isInstanceOf(TaxException.class)
+                .hasMessage(TaxException.taxAmountInvalid(negativeTaxAmountGiven).getMessage());
+    }
+
+    @Test
+    void productWithNoTaxToApply_caseNotBasicSaleAndNotImported() {
+        // Given
+        final Product notBasicSaleAndNotImportedProductGiven = ProductTestBuilder.aBookProduct();
+
+        // When
+        final Product productActual = TaxService.addPriceTaxed(notBasicSaleAndNotImportedProductGiven, BigDecimal.ZERO);
+
+        // Then
+        assertThat(productActual).usingRecursiveComparison().isEqualTo(notBasicSaleAndNotImportedProductGiven);
+    }
+
+    @Test
+    void productWithTax_caseSucess() {
+        // Given
+        final Product basicSaleProductGiven = ProductTestBuilder.aMouseProduct();
+        final BigDecimal taxAmountGiven = BigDecimal.valueOf(2.35);
+
+        // When
+        final Product productActual = TaxService.addPriceTaxed(basicSaleProductGiven, taxAmountGiven);
+
+        // Then
+        assertThat(productActual).usingRecursiveComparison()
+                .ignoringFields("price")
+                .isEqualTo(basicSaleProductGiven);
+        assertThat(productActual.price()).isEqualTo(BigDecimal.valueOf(25.56));
     }
 }

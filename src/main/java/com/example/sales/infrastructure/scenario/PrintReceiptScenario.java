@@ -1,7 +1,9 @@
 package com.example.sales.infrastructure.scenario;
 
 import com.example.sales.application.entity.ProductDto;
+import com.example.sales.application.mapper.ProductDtoToProductMapper;
 import com.example.sales.application.service.InputProductReaderService;
+import com.example.sales.domain.model.Product;
 
 import java.util.List;
 
@@ -15,11 +17,11 @@ public class PrintReceiptScenario {
     }
 
     private static void printReceipt(final String fileName) {
-        // Lecture des donnnées en entrée
         final List<ProductDto> productDtoList = InputProductReaderService.readProductInput(fileName);
-        productDtoList.forEach(productDto -> System.out.println(productDto.toString()));
-
         // Construire un receipt en faisant une boucle :
+        final List<Product> productList = ProductDtoToProductMapper.convertList(productDtoList);
+        productList.forEach(product -> System.out.println(product.toString()));
+
         // Pour chaque produit récupéré son prix et son prix taxé
         // Log le toString de receipt.
     }

@@ -14,7 +14,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputProductReaderService {
-    final static Pattern INPUT_TO_PRODUCT_PATTERN = Pattern.compile("^(\\d+)\\s+(imported\\s+)?(.+)\\s+at\\s+(\\d+\\.\\d{2})$");
+    final static String IMPORTED_WORD = "imported";
+    final static Pattern INPUT_TO_PRODUCT_PATTERN = Pattern.compile("^(\\d+)\\s+(.+)\\s+at\\s+(\\d+\\.\\d{2})$");;
 
     public static List<ProductDto> readProductInput(final String inputFileName) {
         if (inputFileName == null || inputFileName.isBlank()) {
@@ -54,10 +55,13 @@ public class InputProductReaderService {
             throw InputProductReaderException.inputLineInvalid(line);
         }
 
+        final String productNameWithImportedWord = matcher.group(2);
+        final boolean isImported = productNameWithImportedWord.contains(IMPORTED_WORD);
+
         return new InputProductLine(
                 Integer.parseInt(matcher.group(1)),
-                matcher.group(2) != null,
-                matcher.group(3),
-                matcher.group(4));
+                isImported,
+                productNameWithImportedWord,
+                matcher.group(3));
     }
 }

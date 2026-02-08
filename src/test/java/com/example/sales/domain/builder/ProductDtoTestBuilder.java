@@ -65,7 +65,7 @@ public class ProductDtoTestBuilder {
 
     public static ProductDto aWorkingMouseImportedProductDto() {
         return new ProductDtoTestBuilder()
-                .withName("working mouse")
+                .withName("working mouse imported")
                 .withQuantity(1)
                 .withCategory(Category.OTHERS)
                 .withPrice(30.48)

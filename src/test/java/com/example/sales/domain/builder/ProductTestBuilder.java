@@ -74,7 +74,7 @@ public class ProductTestBuilder {
 
     public static Product aFoodProductImported() {
         return new ProductTestBuilder()
-                .withName("Fish")
+                .withName("imported fish")
                 .withQuantity(3)
                 .withCategory(Category.FOOD)
                 .withPrice(15.45)
@@ -84,7 +84,7 @@ public class ProductTestBuilder {
 
     public static Product aKeyboardImportedProduct() {
         return new ProductTestBuilder()
-                .withName("Keyboard")
+                .withName("imported keyboard")
                 .withQuantity(1)
                 .withCategory(Category.OTHERS)
                 .withPrice(30.48)

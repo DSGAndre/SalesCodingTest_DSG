@@ -14,7 +14,7 @@ public class TaxService {
     private static final TaxRule BASIC_SALE_TAX_RULE = new BasicSaleTaxRule();
     private static final TaxRule IMPORT_SALE_TAX_RULE = new ImportSaleTaxRule();
 
-    public static BigDecimal getPriceTaxed(final Product product) {
+    public static BigDecimal getTaxAmount(final Product product) {
         if (product == null) {
             throw ProductException.productInvalid();
         }
@@ -35,16 +35,11 @@ public class TaxService {
         return taxAmount;
     }
 
-    public static Product addPriceTaxed(final Product product, final BigDecimal taxAmount) {
+    public static Product applyTax(final Product product) {
         if (product == null) {
             throw ProductException.productInvalid();
         }
-
-        if (taxAmount == null || taxAmount.compareTo(BigDecimal.ZERO) < 0) {
-            // TODO ADA - CREATE A valueObject taxAmount que va return getPriceTaxed
-            throw TaxException.taxAmountInvalid(taxAmount);
-        }
-
+        final BigDecimal taxAmount = getTaxAmount(product);
         final BigDecimal priceTaxed = product.price().add(taxAmount);
 
         return new Product(product.name(), product.quantity(), product.category(), priceTaxed, product.isImported());

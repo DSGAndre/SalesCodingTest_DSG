@@ -1,6 +1,7 @@
 package com.example.sales.domain.model;
 
 import com.example.sales.application.exception.ProductException;
+import com.example.sales.domain.utils.StringUtils;
 
 import java.math.BigDecimal;
 
@@ -26,6 +27,12 @@ public record Product(String name, int quantity, Category category, BigDecimal p
 
     public boolean isBasicSaleTaxable() {
         return category == Category.OTHERS;
+    }
+
+    public String print() {
+        return String.valueOf(quantity) + StringUtils.SPACE_CHAR
+                + name + StringUtils.COLON_CHAR + StringUtils.SPACE_CHAR
+                + price;
     }
 
     @Override

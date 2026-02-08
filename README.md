@@ -1,6 +1,19 @@
 # SalesCodingTest_DSG
 
 ## How to run the app
+Required :
+
+- [ ] Java 21
+- [ ] Maven 3.x
+
+Method 1 :
+1. Navigate to the project directory : `cd {PATH}/SalesCodingTest_DSG`
+2. Create Jar : `mvn clean package`
+3. Execute Jar : `java -jar target/SalesCodingTest_DSG-1.0-SNAPSHOT.jar`
+
+Method 2 :
+1. Navigate to the project directory : `cd {PATH}/SalesCodingTest_DSG`
+2. Execute java with maven : `mvn clean compile exec:java`
 
 ## Analysis
 The client calls the application to print a receipt. For that, they provide information about each product:

@@ -81,4 +81,14 @@ public class ProductTestBuilder {
                 .imported()
                 .build();
     }
+
+    public static Product aKeyboardImportedProduct() {
+        return new ProductTestBuilder()
+                .withName("Keyboard")
+                .withQuantity(1)
+                .withCategory(Category.OTHERS)
+                .withPrice(30.48)
+                .imported()
+                .build();
+    }
 }

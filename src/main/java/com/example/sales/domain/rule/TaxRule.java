@@ -18,7 +18,7 @@ public abstract class TaxRule {
     }
 
     public Optional<BigDecimal> getProductAmountTax(final Product product) {
-        if (product == null || product.price() == null) {
+        if (product == null) {
             return Optional.empty();
         }
 

@@ -1,7 +1,7 @@
 package com.example.sales.domain.rule;
 
-import com.example.sales.domain.model.Product;
 import com.example.sales.domain.builder.ProductTestBuilder;
+import com.example.sales.domain.model.Product;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -17,22 +17,6 @@ class ImportTaxRuleTest {
     void emptyResult_caseNullProduct() {
         // When
         final Optional<BigDecimal> productAmountTaxOptional = IMPORT_SALE_TAX_RULE.getProductAmountTax(null);
-
-        // Then
-        assertThat(productAmountTaxOptional).isEmpty();
-    }
-
-
-    @Test
-    void emptyResult_caseNullPrice() {
-        // Given
-        final Product productImportedWhitoutPriceGiven = new ProductTestBuilder()
-                .imported()
-                .withoutPrice()
-                .build();
-
-        // When
-        final Optional<BigDecimal> productAmountTaxOptional = IMPORT_SALE_TAX_RULE.getProductAmountTax(productImportedWhitoutPriceGiven);
 
         // Then
         assertThat(productAmountTaxOptional).isEmpty();

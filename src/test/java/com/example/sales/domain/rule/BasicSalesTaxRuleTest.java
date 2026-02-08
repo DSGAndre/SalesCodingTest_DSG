@@ -23,20 +23,6 @@ class BasicSalesTaxRuleTest {
     }
 
     @Test
-    void emptyResult_caseNullPrice() {
-        // Given
-        final Product productWithoutPriceGiven = new ProductTestBuilder()
-                .withoutPrice()
-                .build();
-
-        // When
-        final Optional<BigDecimal> productAmountTaxOptional = BASIC_SALE_TAX_RULE.getProductAmountTax(productWithoutPriceGiven);
-
-        // Then
-        assertThat(productAmountTaxOptional).isEmpty();
-    }
-
-    @Test
     void taxCalculated_caseProductTaxable() {
         // Given
         final Product productGiven = new ProductTestBuilder().build();
